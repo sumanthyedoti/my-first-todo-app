@@ -4,6 +4,8 @@ let list=JSON.parse(localStorage.getItem("list"));
 // function loadFun(){
     // initialize();
     if(list!=null){
+        // let selectedList= document.getElementsByClassName("selected-list");
+        // if()
         showList(list[list.length-1]);
     }else{
         let asideMain=document.getElementsByClassName("main-list-content")[0];
@@ -15,9 +17,6 @@ let list=JSON.parse(localStorage.getItem("list"));
         createListAnime.style.display="block";
         createListAnime.innerHTML="&#8675;";
     }
-// }
-// localStorage.removeItem("list");
-// function initialize(){
     if (localStorage.getItem("username") === null) {
        document.getElementById("welcome-pop-up").style.display="block";
        document.getElementById("welcome-bg").style.filter = "blur(2px)";
@@ -57,7 +56,7 @@ let createListEnter = document.getElementsByClassName("create-list-enter-button"
 var createListForm=document.getElementById("create-list-form");
 createListForm.addEventListener("submit",createList, false);
 
-function createList(){
+function createList(e){
     let createListTitle= document.getElementById("create-list-title");
     const listItem={
         title:createListTitle.value,
@@ -76,11 +75,15 @@ function createList(){
         document.getElementsByClassName("aside")[0].style.filter = "grayscale(0%) blur(0px)";
         document.getElementsByClassName("main")[0].style.filter = "grayscale(0%) blur(0px)";
     }
+    e.preventDefault();
+    addEventListenerToLists();
 }
 
 function appendList(){
     let list=JSON.parse(localStorage.getItem("list"));
         if(list!=null){
+            let asideMain=document.getElementsByClassName("aside-main")[0];
+            asideMain.innerHTML="";
             for(let i of list){
                 var listElement=document.createElement("p");
                 var att=document.createAttribute("class");
@@ -90,10 +93,10 @@ function appendList(){
                 att.nodeValue="true";
                 listElement.setAttributeNode(att);
                 listElement.innerHTML=i.title;
-                let asideMain=document.getElementsByClassName("aside-main")[0];
                 asideMain.appendChild(listElement);
             }
         }
+        addEventListenerToLists();
 }
 
 function showList(list){
@@ -117,12 +120,14 @@ function showList(list){
         }
     }
 }
-let addButton = document.getElementById("enter-list-button");
-addButton.addEventListener("click", appendListItem, false);
+let addButton = document.getElementsByClassName("enter-list-form")[0];
+addButton.addEventListener("submit", appendListItem, false);
 
-function appendListItem(){
+function appendListItem(e){
+    e.preventDefault();
     let listText = document.getElementById("enter-list-text").value.trim();
     if(listText=="") return;
+    document.getElementById("enter-list-text").value="";
     let listTitle=document.getElementsByClassName("main-header")[0].innerHTML;
     for(let item of list){
         if(item.title===listTitle){
@@ -142,14 +147,19 @@ function appendListItem(){
     asideMain.appendChild(listElement);   
 }
 
-// function addEventListenerToLists(){
+function addEventListenerToLists(){
     let listTitles = document.getElementsByClassName("list-title");
     for(let listTitle of listTitles){
         listTitle.addEventListener("click", showListOnClick, false);
     }
-// }
+}
 function showListOnClick(e){
     var target = event.target || event.srcElement;
+    let listTitles= document.getElementsByClassName("list-title");
+    for(let listTitle of listTitles){
+        listTitle.classList.remove("selected-list");
+    }
+    target.className+=" selected-list";
     let selectedList=list.filter((item)=> item.title==target.innerHTML);
     showList(selectedList[0]);
 }

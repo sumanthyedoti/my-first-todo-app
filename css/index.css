@@ -221,4 +221,17 @@ header{
     border-bottom: 2px solid rgba(0, 0, 0, 0.8);
     /* box-shadow: 0px 2px 4px -3px rgba(119, 61, 6, 1); */
 }
-
+.selected-list{
+    animation-name: selected-list;
+    animation-duration: 400ms;
+    animation-fill-mode: forwards;
+}
+    @keyframes selected-list{
+        100%{
+            margin: 10px;
+            padding: 4px;
+            background-color: rgb(184, 97, 16);
+            box-shadow: 0px 5px 4px 0px rgba(119, 61, 6, 0.6);
+            color: rgba(250, 240, 94, 0.856);
+        }
+    }

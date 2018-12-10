@@ -19,12 +19,12 @@
             transform: rotateX(-90deg);
             border-radius: 70% 5% 90% 5%/7% 70% 60% 70%;
         }
-        75%{
+        /* 75%{
             transform: rotateX(0deg);
         }
         90%{
             transform: rotateX(-20deg);
-        }
+        } */
         100%{
             top: 0px;
             opacity: 1;
@@ -32,7 +32,7 @@
             border-radius: 70% 5% 50% 5%/7% 70% 8% 70%;
         }
     }
-        .welcome-pop-close{
+        /* .welcome-pop-close{
             animation-name: welcome-div;
             animation-duration: 2s; 
             transform: translateY(-1000px);
@@ -56,7 +56,7 @@
                    left:-1000px;
                     opacity: 1;
                 }
-            }
+            } */
 #welcome-main{
     width: 70%;
     height: 80%;
@@ -122,6 +122,7 @@
     -webkit-transition:height 1s;
     border-bottom: 2px solid rgba(91, 230, 230, 0.8);
     width: 100%;
+    text-align: center;
     height: 1.7em;
     font-family: 'The Girl Next Door', cursive;
     font-weight: bold;
@@ -163,3 +164,165 @@
 
 
 
+/* create-list pop up */
+
+ #create-list-pop-up{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    z-index: 1; 
+    animation-name: create-list-div;
+    animation-duration: 800ms; 
+    /* animation-timing-function: cubic-bezier(0.35, 0.05, 0.68, 1.55); */
+    animation-timing-function: ease-in-out;
+    /* transition: 2s trasform ease-in;
+    transform-style: preserve-3d;
+    perspective: 50px; */
+}
+    @keyframes create-list-div{
+        0% {
+            bottom: 10px;
+            left: -200px; 
+            width: 80%;
+            height: 40%;
+            opacity: 0.1;
+            transform: rotateY(-90deg);
+            border-radius: 70% 5% 90% 5%/7% 70% 60% 70%;
+        }
+        75%{
+            transform: rotateY(0deg);
+        }
+        90%{
+            transform: rotateY(-20deg);
+        }
+        100%{
+            opacity: 1;
+            width: 100%;
+             height: 100%;
+            transform: rotateY(0deg);
+            border-radius: 70% 5% 50% 5%/7% 70% 8% 70%;
+        }
+    }
+
+#create-list-main{
+    width: 70%;
+    height: 70%;
+    position: relative;
+    border: 6px solid rgba(0,0,0,1);
+    border-radius: 70% 5% 50% 5%/7% 70% 8% 70%;
+    background-color:rgba(0, 0, 0, 0.3);
+    margin: 15vh auto 5vh auto;
+    
+}
+  
+.create-list-content{
+    z-index: 10;
+}
+#create-list-bg{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 72% 6% 57% 7%/10% 90% 12% 80%;
+    background-image: url("../images/pop-up1.gif");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /* overflow: hidden; */
+    object-fit: cover;
+    object-position: left; 
+    /* animation-name: create-list-; */
+    animation-duration: 1s; 
+    animation-timing-function: ease-in;
+}
+
+    
+.create-list-content{
+    position: absolute;
+    z-index: 10;
+    font-family: 'Gloria Hallelujah', cursive;
+    font-weight: bold;
+    font-size: 3vw;
+    color: aqua;
+    top: 10px;
+    left:10px;
+    margin: 10vh 15vw;
+}
+
+.create-list-content  input[type="text"]{
+    background-color:rgba(0, 0, 0, 0);
+    border: none;
+    outline:none;
+    transition:height, width;
+    transition-duration: 1s;
+    border-bottom: 2px solid rgba(91, 230, 230, 0.8);
+    width: 100%;
+    height: 1.7em;
+    text-align: center;
+    font-family: 'The Girl Next Door', cursive;
+    font-weight: bold;
+    line-height: 2em;
+    font-size: 3vw;
+    /* color: orangered; */
+    color: rgb(223, 247, 7);
+    letter-spacing: 4px;
+    padding-bottom: 0.1em;
+    margin-top: 10vh;
+}
+.create-list-content button{
+    position: relative;
+    cursor: pointer;
+    background-color:rgba(0, 0, 0, 0);
+    border: none;
+    outline:none;
+    background-image: url(../images/enter.png);
+    background-repeat: no-repeat;
+    width: 4vw;
+    height: 4vw;
+    bottom: 7vw;
+    left: 102%;
+}
+.create-list-content img{
+    width: 4vw;
+    height: 4vw;
+    position: absolute;
+    top:0px;
+    left:0px;
+ }
+ .create-list-content img:active{
+     padding: 2px;
+ }
+
+ #create-list-form input[type="submit"]{
+    display: none;
+ }
+
+
+ .create-list-anime-start{
+    width: 50px;
+    height: 100px;
+    position: absolute;
+    text-align: center;
+    font-size: 100px;
+    display: none;
+    color: orangered;
+    bottom: 20vh;
+    left: 8vw;
+    animation-name: create-list-anime;
+    text-shadow: 4px 4px 4px rgba(173, 85, 12, 0.6);
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+
+}
+    @keyframes create-list-anime{
+        0%{
+            bottom: 25vh;
+        }
+        50%{
+            bottom: 20vh;
+        }
+        100%{
+            bottom: 25vh;
+        }
+    }

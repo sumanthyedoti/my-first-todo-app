@@ -310,7 +310,7 @@
     left: 8vw;
     animation-name: create-list-anime;
     text-shadow: 4px 4px 4px rgba(173, 85, 12, 0.6);
-    animation-duration: 1000ms;
+    animation-duration: 1500ms;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
 
@@ -320,7 +320,7 @@
             bottom: 25vh;
         }
         50%{
-            bottom: 20vh;
+            bottom: 23vh;
         }
         100%{
             bottom: 25vh;

@@ -1,33 +1,31 @@
 'use strict'
 let list=JSON.parse(localStorage.getItem("list"));
-// window.onload=loadFun;
-// function loadFun(){
-    // initialize();
-    if(list!=null){
-        // let selectedList= document.getElementsByClassName("selected-list");
-        // if()
-        showList(list[list.length-1]);
-    }else{
-        let asideMain=document.getElementsByClassName("main-list-content")[0];
-        asideMain.innerHTML="";
-        document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(2px)";
-        document.getElementsByClassName("main")[0].style.userSelect = "none";
-        let createListAnime=document.getElementsByClassName("create-list-anime")[0];
-        createListAnime.className+=" create-list-anime-start";
-        createListAnime.style.display="block";
-        createListAnime.innerHTML="&#8675;";
-    }
-    if (localStorage.getItem("username") === null) {
-       document.getElementById("welcome-pop-up").style.display="block";
-       document.getElementById("welcome-bg").style.filter = "blur(2px)";
-       document.getElementsByClassName("aside")[0].style.filter = "grayscale(70%) blur(3px)";
-       document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(3px)";
-      }else{
-        var asideHeader=document.getElementsByClassName("aside-header")[0];
-        asideHeader.innerHTML=(localStorage.getItem("username"));
-        appendList();
-      }
-// }
+let length=list ? list.length: 0;
+// localStorage.removeItem("list");
+
+if(list!=null){
+    showList(list[list.length-1]);
+}else{
+    let asideMain=document.getElementsByClassName("main-list-content")[0];
+    asideMain.innerHTML="";
+    document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(2px)";
+    document.getElementsByClassName("main")[0].style.userSelect = "none";
+    let createListAnime=document.getElementsByClassName("create-list-anime")[0];
+    createListAnime.className+=" create-list-anime-start";
+    createListAnime.style.display="block";
+    createListAnime.innerHTML="&#8675;";
+}
+
+if (localStorage.getItem("username") === null) {
+    document.getElementById("welcome-pop-up").style.display="block";
+    document.getElementById("welcome-bg").style.filter = "blur(2px)";
+    document.getElementsByClassName("aside")[0].style.filter = "grayscale(70%) blur(3px)";
+    document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(3px)";
+}else{
+    var asideHeader=document.getElementsByClassName("aside-header")[0];
+    asideHeader.innerHTML=(localStorage.getItem("username"));
+    appendList();
+}
 
 let enter = document.getElementsByClassName("welcome-enter")[0];
 enter.addEventListener("click",addName,false);
@@ -51,16 +49,22 @@ function displayCreateList(){
        document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(3px)";
 }
 let createListEnter = document.getElementsByClassName("create-list-enter-button")[0];
-// createListEnter.addEventListener("click",createList,false);
-// --------------
-var createListForm=document.getElementById("create-list-form");
-createListForm.addEventListener("submit",createList, false);
+createListEnter.addEventListener("click",createList,false);
+if(!createListEnter){
+    var createListForm=document.getElementById("create-list-form");
+    createListForm.addEventListener("submit",createList, false);
+}
 
 function createList(e){
     let createListTitle= document.getElementById("create-list-title");
+    let listTitle=createListTitle.value;
+    listTitle=listTitle.trim();
+    if(listTitle=="") return false;
     const listItem={
-        title:createListTitle.value,
-        items:[]
+        id: length++,
+        title: listTitle,
+        items:[],
+        isDone: false
     }
     if (localStorage.getItem("list") === null){
         let list=[listItem];
@@ -75,8 +79,8 @@ function createList(e){
         document.getElementsByClassName("aside")[0].style.filter = "grayscale(0%) blur(0px)";
         document.getElementsByClassName("main")[0].style.filter = "grayscale(0%) blur(0px)";
     }
-    e.preventDefault();
     addEventListenerToLists();
+    return true;
 }
 
 function appendList(){
@@ -98,6 +102,10 @@ function appendList(){
         }
         addEventListenerToLists();
 }
+
+/** highlight entered list title */
+let listTitles= document.getElementsByClassName("list-title");
+listTitles[listTitles.length-1].className+=" selected-list";
 
 function showList(list){
     let listTitle = document.getElementsByClassName("main-header")[0];

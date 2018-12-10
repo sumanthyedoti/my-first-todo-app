@@ -160,7 +160,9 @@ header{
     margin: 10px auto 50px auto;
     height: 90%;
     overflow: auto;
-    background-color: rgb(226, 221, 221);
+    background-color: whitesmoke;
+    border-radius: 1% 80% 1% 90%/60% 1% 90% 1%;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
 }
 .enter-list-form{
     width: 100%;

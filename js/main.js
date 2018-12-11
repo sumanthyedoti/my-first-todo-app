@@ -63,8 +63,7 @@ function createList(e){
     const listItem={
         id: length++,
         title: listTitle,
-        items:[],
-        isDone: false
+        items:[]
     }
     if (localStorage.getItem("list") === null){
         let list=[listItem];
@@ -123,7 +122,7 @@ function showList(list){
             att=document.createAttribute("draggable");
             att.nodeValue="true";
             listElement.setAttributeNode(att);
-            listElement.innerHTML=i;
+            listElement.innerHTML=i.note;
             asideMain.appendChild(listElement);
         }
     }
@@ -137,9 +136,15 @@ function appendListItem(e){
     if(listText=="") return;
     document.getElementById("enter-list-text").value="";
     let listTitle=document.getElementsByClassName("main-header")[0].innerHTML;
+    const listNote={
+        id: 0,
+        note: listText,
+        isDone: false
+    }
     for(let item of list){
         if(item.title===listTitle){
-            item.items.push(listText);
+            listNote.id=item.items.length;
+            item.items.push(listNote);
         }
     }
     localStorage.setItem("list",JSON.stringify(list));  //
@@ -171,3 +176,4 @@ function showListOnClick(e){
     let selectedList=list.filter((item)=> item.title==target.innerHTML);
     showList(selectedList[0]);
 }
+

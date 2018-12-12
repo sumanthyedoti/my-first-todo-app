@@ -109,18 +109,46 @@ header{
 }
 
 .list-title{
-    margin: 10px 2px;
+    margin: 10px 4px;
     padding: 2px;
     background-color: orange;
     border-radius: 2% 70% 3% 60%/80% 3% 80% 6%;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
     font-family: 'Loved by the King', cursive;
     font-size: 20px;
-    font-weight: bold;
+    position: relative;
+    font-weight: bolder;
     text-align: center;
     letter-spacing: 4px;
 }
-
+.selected-list{
+    animation-name: selected-list;
+    animation-duration: 400ms;
+    animation-fill-mode: forwards;
+}
+    @keyframes selected-list{
+        100%{
+            margin: 5px 4px;
+            padding-right: 14px;
+            font-size: 18px;
+            letter-spacing: 4px;
+            background-color: rgba(212, 119, 32, 0.9);
+            box-shadow: 0px 5px 4px 0px rgba(119, 61, 6, 0.6);
+            color: rgba(250, 240, 94, 0.856);
+        }
+    }
+.delete-button{
+    color: rgb(253, 17, 17);
+    float: right;
+    font-weight: bold;
+    font-size: 15px;
+    position: absolute;
+    top: 6px;
+    right: 3px;
+    z-index: 10;
+    cursor: pointer;
+    text-shadow: 2px 2px 2px rgba(100, 12, 12,0.5);
+}
 .main{
     grid-area: main;
     width: 98%;
@@ -160,6 +188,7 @@ header{
     margin: 10px auto 50px auto;
     height: 90%;
     overflow: auto;
+    position: relative;
     background-color: whitesmoke;
     border-radius: 1% 80% 1% 90%/60% 1% 90% 1%;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
@@ -220,30 +249,8 @@ header{
     letter-spacing: 5px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.8);
 }
-.selected-list{
-    animation-name: selected-list;
-    animation-duration: 400ms;
-    animation-fill-mode: forwards;
-}
-    @keyframes selected-list{
-        100%{
-            margin: 10px;
-            padding: 4px;
-            background-color: rgb(184, 97, 16);
-            box-shadow: 0px 5px 4px 0px rgba(119, 61, 6, 0.6);
-            color: rgba(250, 240, 94, 0.856);
-        }
-    }
 
-.delete-button{
-    color: rgb(197, 37, 37);
-    float: right;
-    font-weight: bold;
-    font-size: 15px;
-    position: relative;
-    z-index: 10;
-    cursor: pointer;
-}
+
 .checkbox{
     margin-right: 10px;
     cursor: url('../images/pen.png') 20 40, default;

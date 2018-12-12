@@ -2,10 +2,10 @@
 let list=JSON.parse(localStorage.getItem("list"));
 let length=list ? list.length: 0;
 // localStorage.removeItem("list");
-console.log(list.length);
+// localStorage.clear();
 if(list!=null && list.length!=0){
     showList(list[list.length-1]);
-}else{
+}else if(localStorage.getItem("username") !== null){
     let asideMain=document.getElementsByClassName("main-list-content")[0];
     asideMain.innerHTML="";
     document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(2px)";
@@ -16,7 +16,7 @@ if(list!=null && list.length!=0){
     createListAnime.innerHTML="&#8675;";
 }
 
-if (localStorage.getItem("username") === null) {
+if(localStorage.getItem("username") === null) {
     document.getElementById("welcome-pop-up").style.display="block";
     document.getElementById("welcome-bg").style.filter = "blur(2px)";
     document.getElementsByClassName("aside")[0].style.filter = "grayscale(70%) blur(3px)";
@@ -105,9 +105,10 @@ function appendList(){
 }
 
 /** highlight entered list title */
-let listTitles= document.getElementsByClassName("list-title");
-listTitles[listTitles.length-1].className+=" selected-list";
-
+if(list!=null && list.length!=0){
+    let listTitles= document.getElementsByClassName("list-title");
+    listTitles[listTitles.length-1].className+=" selected-list";
+}
 function showList(list){
     // console.log(list);
     let listTitle = document.getElementsByClassName("main-header")[0];
@@ -136,6 +137,7 @@ function showList(list){
         }
     }
     addCheckEvent();
+    addListItemDeleteEvent();
 }
 let addButton = document.getElementsByClassName("enter-list-form")[0];
 addButton.addEventListener("submit", appendListItem, false);
@@ -169,6 +171,7 @@ function appendListItem(e){
     let asideMain=document.getElementsByClassName("main-list-content")[0];
     asideMain.appendChild(listElement);   
     addCheckEvent();
+    addListItemDeleteEvent();
 }
 
 function addEventListenerToLists(){
@@ -209,7 +212,6 @@ function addCheckEvent() {
 }
 
 function checkBoxEvent(e){
-    e.preventDefault();
     let listTitle=document.getElementsByClassName("main-header")[0].innerHTML;
     let listItem = list.filter((listItem)=> listItem.title==listTitle);
     if(listItem[0].items[e.target.value].isDone){
@@ -249,4 +251,40 @@ function listDeleteEvent(e){
     }
     e.target.parentNode.parentNode.removeChild(e.target.parentNode);
     localStorage.setItem("list", JSON.stringify(list));
+}
+
+function addListItemDeleteEvent() {
+    let dltBtn = document.getElementsByClassName("main-main")[0].getElementsByClassName("delete-button");
+    [...dltBtn].forEach((item)=>{
+        item.addEventListener('click', listItemDeleteEvent, false);
+    });
+    
+}
+function listItemDeleteEvent(e){
+     let selectedList= document.getElementsByClassName("selected-list")[0];
+    let listObject={};
+    let listNum=0;
+    for(let item=0; item< list.length;item++){
+        if(list[item].id==selectedList.id){
+            listObject=list[item];
+            break;
+        }
+        listNum++;
+    }
+    for(let item=0; item<listObject.items.length;item++){
+        if(listObject.items[item].id==e.target.id){
+            listObject.items.splice(item,1);
+            break;
+        }
+    }
+    list[listNum]=listObject;
+    let isDone = e.target.parentNode.firstChild.hasAttribute("checked");
+    if(isDone){
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        localStorage.setItem("list", JSON.stringify(list));
+    }else if(confirm("The unchecked note will be deleted!")){
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        localStorage.setItem("list", JSON.stringify(list));
+    }
+    
 }

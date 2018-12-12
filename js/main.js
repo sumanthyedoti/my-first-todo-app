@@ -121,11 +121,18 @@ function showList(list){
             listElement.setAttributeNode(att);
             att=document.createAttribute("draggable");
             att.nodeValue="true";
+            let ischecked="";
+            if(i.isDone){
+                listElement.className+=" strikeout";
+                ischecked="checked";
+            }
+            
             listElement.setAttributeNode(att);
-            listElement.innerHTML=i.note;
+            listElement.innerHTML=`<input type="checkbox" ${ischecked} class="checkbox" value="${i.id}">${i.note}<span class="delete-button">&#10008;<span>`;
             asideMain.appendChild(listElement);
         }
     }
+    addCheckEvent();
 }
 let addButton = document.getElementsByClassName("enter-list-form")[0];
 addButton.addEventListener("submit", appendListItem, false);
@@ -155,9 +162,10 @@ function appendListItem(e){
     att=document.createAttribute("draggable");
     att.nodeValue="true";
     listElement.setAttributeNode(att);
-    listElement.innerHTML=listText;
+    listElement.innerHTML=`<input type="checkbox" class="checkbox" value="${listNote.id}">${listText}<span class="delete-button">&#10008;<span>`;
     let asideMain=document.getElementsByClassName("main-list-content")[0];
     asideMain.appendChild(listElement);   
+    addCheckEvent();
 }
 
 function addEventListenerToLists(){
@@ -176,4 +184,37 @@ function showListOnClick(e){
     let selectedList=list.filter((item)=> item.title==target.innerHTML);
     showList(selectedList[0]);
 }
+
+function addCheckEvent() {
+    let checkboxes = document.getElementsByClassName("checkbox");
+    for(let checkbox=0; checkbox<checkboxes.length;checkbox++){
+        checkboxes[checkbox].addEventListener("change", checkBoxEvent, false);
+    }
+}
+
+function checkBoxEvent(e){
+    e.preventDefault();
+    let listTitle=document.getElementsByClassName("main-header")[0].innerHTML;
+    let listItem = list.filter((listItem)=> listItem.title==listTitle);
+    console.log(e.target.parentNode);
+    console.log("-----------------------");
+    if(listItem[0].items[e.target.value].isDone){
+        // console.log(1);
+        listItem[0].items[e.target.value].isDone=false;
+        console.log(e.target.parentNode.classList);
+        e.target.removeAttribute("checked");
+        e.target.parentNode.classList.remove("strikeout");
+        console.log(e.target.parentNode.classList);
+    }else{
+        listItem[0].items[e.target.value].isDone=true;
+        e.target.parentNode.className+=" strikeout";
+        let att=document.createAttribute("checked");
+        e.target.setAttributeNode(att);
+    }
+    localStorage.setItem("list",JSON.stringify(list));  
+    console.log(e.target.parentNode);
+    console.log(list);
+    strikeout();
+}
+
 

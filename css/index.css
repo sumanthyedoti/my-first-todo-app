@@ -132,7 +132,7 @@ header{
     border-radius: 1% 80% 2% 60%/50% 2% 70% 2%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 9fr;
+    grid-template-rows: 10vh 70vh;
     grid-gap: 10px;
 }
 
@@ -153,7 +153,7 @@ header{
 .main-main{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 9fr;
+    grid-template-rows: 10% 65vh;
 }
 .main-list-content{
     width: 99%;
@@ -237,3 +237,26 @@ header{
             color: rgba(250, 240, 94, 0.856);
         }
     }
+
+.delete-button{
+    color: rgb(197, 37, 37);
+    float: right;
+    font-weight: bold;
+    font-size: 15px;
+    position: relative;
+    z-index: 10;
+}
+.checkbox{
+    margin-right: 10px;
+}
+.checkbox:checked{
+    transform: scale(1.5);
+    color: red;
+}
+.strikeout{
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+html{
+    height: 100vh;
+}

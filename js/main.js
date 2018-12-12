@@ -197,15 +197,10 @@ function checkBoxEvent(e){
     e.preventDefault();
     let listTitle=document.getElementsByClassName("main-header")[0].innerHTML;
     let listItem = list.filter((listItem)=> listItem.title==listTitle);
-    console.log(e.target.parentNode);
-    console.log("-----------------------");
     if(listItem[0].items[e.target.value].isDone){
-        // console.log(1);
         listItem[0].items[e.target.value].isDone=false;
-        console.log(e.target.parentNode.classList);
         e.target.removeAttribute("checked");
         e.target.parentNode.classList.remove("strikeout");
-        console.log(e.target.parentNode.classList);
     }else{
         listItem[0].items[e.target.value].isDone=true;
         e.target.parentNode.className+=" strikeout";
@@ -213,9 +208,6 @@ function checkBoxEvent(e){
         e.target.setAttributeNode(att);
     }
     localStorage.setItem("list",JSON.stringify(list));  
-    console.log(e.target.parentNode);
-    console.log(list);
-    strikeout();
 }
 
 

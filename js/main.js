@@ -2,8 +2,8 @@
 let list=JSON.parse(localStorage.getItem("list"));
 let length=list ? list.length: 0;
 // localStorage.removeItem("list");
-
-if(list!=null){
+console.log(list.length);
+if(list!=null && list.length!=0){
     showList(list[list.length-1]);
 }else{
     let asideMain=document.getElementsByClassName("main-list-content")[0];
@@ -96,6 +96,7 @@ function appendList(){
                 att=document.createAttribute("draggable");
                 att.nodeValue="true";
                 listElement.setAttributeNode(att);
+                listElement.id=i.id;
                 listElement.innerHTML=i.title;
                 asideMain.appendChild(listElement);
             }
@@ -108,6 +109,7 @@ let listTitles= document.getElementsByClassName("list-title");
 listTitles[listTitles.length-1].className+=" selected-list";
 
 function showList(list){
+    // console.log(list);
     let listTitle = document.getElementsByClassName("main-header")[0];
     listTitle.innerHTML=list.title;
     let asideMain=document.getElementsByClassName("main-list-content")[0];
@@ -129,7 +131,7 @@ function showList(list){
             }
             
             listElement.setAttributeNode(att);
-            listElement.innerHTML=`<input type="checkbox" ${ischecked} class="checkbox" value="${i.id}">${i.note}<span class="delete-button">&#10008;<span>`;
+            listElement.innerHTML=`<input type="checkbox" ${ischecked} class="checkbox" value="${i.id}">${i.note}<span class="delete-button" id ="${i.id}">&#10008;<span>`;
             asideMain.appendChild(listElement);
         }
     }
@@ -180,10 +182,23 @@ function showListOnClick(e){
     let listTitles= document.getElementsByClassName("list-title");
     for(let listTitle of listTitles){
         listTitle.classList.remove("selected-list");
+        let del=listTitle.getElementsByClassName("delete-button")[0];
+        if(del){
+            listTitle.removeChild(del);
+        }
     }
     target.className+=" selected-list";
-    let selectedList=list.filter((item)=> item.title==target.innerHTML);
+    let dltBtn=document.createElement("span");
+    let att=document.createAttribute("class");
+    att.nodeValue="delete-button";
+    dltBtn.setAttributeNode(att);
+    dltBtn.id=e.target.id;
+    dltBtn.innerHTML="&#10008;";
+    target.appendChild(dltBtn);
+    
+    let selectedList=list.filter((item)=> item.id== e.target.id);
     showList(selectedList[0]);
+    addListTitleDeleteEvent(e.target);
 }
 
 function addCheckEvent() {
@@ -211,3 +226,27 @@ function checkBoxEvent(e){
 }
 
 
+function addListTitleDeleteEvent(ele) {
+    let dltBtn = ele.getElementsByClassName("delete-button")[0];
+    dltBtn.addEventListener('click', listDeleteEvent, false);
+}
+
+function listDeleteEvent(e){
+    let item=0;
+    for(; item<list.length;item++){
+        if(list[item].id==e.target.id){
+            list.splice(item,1);
+            break;
+        }
+    }
+    console.log(e.target.parentNode.nextSibling);
+    if(e.target.parentNode.nextSibling){
+        showList(list[item]);
+    }else if((e.target.parentNode.previousSibling)){
+        showList(list[item-1]);
+    }else{
+        window.location.reload();
+    }
+    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+    localStorage.setItem("list", JSON.stringify(list));
+}

@@ -242,13 +242,14 @@ header{
     font-size: 15px;
     position: relative;
     z-index: 10;
+    cursor: pointer;
 }
 .checkbox{
     margin-right: 10px;
     cursor: url('../images/pen.png') 20 40, default;
 }
 .checkbox:checked{
-    transform: scale(1.5);
+    transform: scale(1.6);
     color: red;
 }
 .strikeout{

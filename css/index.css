@@ -39,6 +39,7 @@ header{
     font-size: 35px;
     text-align: center;
     font-family: 'Gloria Hallelujah', cursive;
+    user-select: none;
 }
 .aside{
     grid-area: aside;
@@ -111,6 +112,7 @@ header{
 .list-title{
     margin: 10px 4px;
     padding: 2px;
+    width: 95%;
     background-color: orange;
     border-radius: 2% 70% 3% 60%/80% 3% 80% 6%;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
@@ -129,6 +131,7 @@ header{
     @keyframes selected-list{
         100%{
             margin: 5px 4px;
+            padding: 5px;
             padding-right: 14px;
             font-size: 18px;
             letter-spacing: 4px;
@@ -160,8 +163,8 @@ header{
     border-radius: 1% 80% 2% 60%/50% 2% 70% 2%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 10vh 70vh;
-    grid-gap: 10px;
+    grid-template-rows: 7vh 75vh;
+    grid-gap: 5px;
 }
 
 .main-header{
@@ -175,13 +178,13 @@ header{
     padding: 5px;
     letter-spacing: 6px;
     background-color: rgba(247, 162, 4, 0.8);
-    border-radius: 40% 2% 70% 2%/10% 90% 20% 70%;
+    border-radius: 40% 60% 70% 5%/10% 20% 20% 20%;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
 }
 .main-main{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 10% 65vh;
+    grid-template-rows: 10% 69vh;
 }
 .main-list-content{
     width: 99%;
@@ -279,17 +282,20 @@ header{
     border-top: 2px dotted gray;
     border-left: 2px dotted gray;
     border-right: 2px dotted gray;
-    padding: 5px;
-    width: 102%;
+    border-radius: 2% 70% 3% 60%/80% 3% 80% 6%;
+    padding: 10px;
+    width: 104%;
+    margin: 0px;
+    position: absolute;
+    top: -5px;
+    left: -2px;
+}
+.note-drop-target{
+    border-top: 400px dotted gray;
+    width: 100%;
     margin: 0px;
     position: absolute;
     top: -5px;
     left: -1px;
-}
-.note-drop-target{
-    border-top: 4px dotted gray;
-    width: 102%;
-    position: absolute;
-    top: -5px;
-    left: -1px;
+    z-index: 100;
 }

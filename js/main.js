@@ -238,7 +238,9 @@ function addListTitleDeleteEvent(ele) {
 
 function listDeleteEvent(e){
     let item=0;
-    if(confirm("The list will be deleted!")){
+    let sign = document.createElement("span");
+    sign.innerHTML="&#x26A0;";
+    if(confirm(sign.innerHTML+"   The list will be deleted!")){
         for(; item<list.length;item++){
             if(list[item].id==e.target.id){
                 list.splice(item,1);

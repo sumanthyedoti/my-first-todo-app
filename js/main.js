@@ -139,6 +139,7 @@ function showList(list){
     }
     addCheckEvent();
     addListItemDeleteEvent();
+    addNotesDragAndDrop();
 }
 let addButton = document.getElementsByClassName("enter-list-form")[0];
 addButton.addEventListener("submit", appendListItem, false);
@@ -173,6 +174,7 @@ function appendListItem(e){
     asideMain.appendChild(listElement);   
     addCheckEvent();
     addListItemDeleteEvent();
+    addNotesDragAndDrop();
 }
 
 function addEventListenerToLists(){
@@ -236,22 +238,24 @@ function addListTitleDeleteEvent(ele) {
 
 function listDeleteEvent(e){
     let item=0;
-    for(; item<list.length;item++){
-        if(list[item].id==e.target.id){
-            list.splice(item,1);
-            break;
+    if(confirm("The list will be deleted!")){
+        for(; item<list.length;item++){
+            if(list[item].id==e.target.id){
+                list.splice(item,1);
+                break;
+            }
         }
+        if(e.target.parentNode.nextSibling){
+            showList(list[item]);
+        }else if((e.target.parentNode.previousSibling)){
+            showList(list[item-1]);
+        }else{
+            window.location.reload();
+        }
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        localStorage.setItem("list", JSON.stringify(list));
     }
-    console.log(e.target.parentNode.nextSibling);
-    if(e.target.parentNode.nextSibling){
-        showList(list[item]);
-    }else if((e.target.parentNode.previousSibling)){
-        showList(list[item-1]);
-    }else{
-        window.location.reload();
-    }
-    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
-    localStorage.setItem("list", JSON.stringify(list));
+    
 }
 
 function addListItemDeleteEvent() {
@@ -319,8 +323,7 @@ function listDragEnter(e){
         att.nodeValue="list-drop-target";
         listDropTarget.setAttributeNode(att);
         e.target.appendChild(listDropTarget);
-    }
-    
+    }  
 }
 function listDragOver(e){
     e.preventDefault();
@@ -340,4 +343,60 @@ function listDrop(e){
         item.parentNode.removeChild(item);
     })
       addListTitlesDragAndDrop();
+}
+
+
+function addNotesDragAndDrop(){
+    let listTitles= document.getElementsByClassName("main-list-item");
+    [...listTitles].forEach((item)=> {
+        item.addEventListener("dragstart", notesStart, false);
+        item.addEventListener("dragend", notesEnd, false);
+        item.addEventListener("dragenter", notesEnter, false);
+        item.addEventListener("dragover", notesOver, false);
+        item.addEventListener("dragleave", notesLeave, false);
+        item.addEventListener("drop", notesDrop, false);
+    });
+}
+let notesSrc= null;
+function notesStart(e){
+    console.log(e.type, e.target.innerText);
+    e.dataTransfer.setData("text/html", e.target.outerHTML);
+    e.dataTransfer.setData("id", e.target.id);
+    notesSrc= this;
+}
+function notesEnd(e){
+    console.log(e.type, e.target.innerText);
+}
+function notesEnter(e){
+    e.preventDefault();
+    console.log(e.type, e.target.innerText);
+    if(notesSrc.id!=this.id){
+        var notesTarget=document.createElement("div");
+        var att=document.createAttribute("class");
+        att.nodeValue="note-drop-target";
+        notesTarget.setAttributeNode(att);
+        e.target.appendChild(notesTarget);
+    }  
+}
+function notesOver(e){
+    e.preventDefault();
+    console.log(e.type, e.target.innerText);
+}
+function notesLeave(e){
+    console.log(e.type, e.target.innerText);
+    let dropTarget=document.getElementsByClassName("note-drop-target")[0];
+    if(dropTarget) dropTarget.parentNode.removeChild(dropTarget);
+}
+function notesDrop(e){
+    console.log(e.type, e.target.innerText);
+    if (notesSrc != this) {
+        var dropSrcId = e.dataTransfer.getData('id');
+        this.parentNode.insertBefore(notesSrc,this);
+      }
+      this.classList.remove("note-drop-target");
+      let targetIndicators= document.getElementsByClassName("note-drop-target");
+    [...targetIndicators].forEach((item)=>{
+        item.parentNode.removeChild(item);
+    })
+    addNotesDragAndDrop();
 }

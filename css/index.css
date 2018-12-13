@@ -188,7 +188,6 @@ header{
     margin: 10px auto 50px auto;
     height: 90%;
     overflow: auto;
-    position: relative;
     background-color: whitesmoke;
     border-radius: 1% 80% 1% 90%/60% 1% 90% 1%;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
@@ -245,6 +244,7 @@ header{
     font-family: 'The Girl Next Door', cursive;
     color: rgba(0, 0, 0, 0.856);
     font-weight: bolder;
+    position: relative;
     padding: 2px 10px;
     letter-spacing: 5px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.8);
@@ -274,3 +274,21 @@ header{
             /* border-radius: 1% 70% 10% 30%/95% 10% 8% 10%; */
         }
     }
+
+.list-drop-target{
+    border-top: 2px dotted gray;
+    border-left: 2px dotted gray;
+    border-right: 2px dotted gray;
+    padding: 5px;
+    width: 102%;
+    margin: 0px;
+    position: absolute;
+    top: -5px;
+    left: -1px;
+}
+.note-drop-target{
+    border-top: 4px dotted gray;
+    position: absolute;
+    top: -5px;
+    left: -1px;
+}

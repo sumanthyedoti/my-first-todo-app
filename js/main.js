@@ -102,6 +102,7 @@ function appendList(){
             }
         }
         addEventListenerToLists();
+        addListTitlesDragAndDrop();
 }
 
 /** highlight entered list title */
@@ -287,4 +288,56 @@ function listItemDeleteEvent(e){
         localStorage.setItem("list", JSON.stringify(list));
     }
     
+}
+
+function addListTitlesDragAndDrop(){
+    let listTitles= document.getElementsByClassName("list-title");
+    [...listTitles].forEach((item)=> {
+        item.addEventListener("dragstart", listDragStart, false);
+        item.addEventListener("dragend", listDragEnd, false);
+        item.addEventListener("dragenter", listDragEnter, false);
+        item.addEventListener("dragover", listDragOver, false);
+        item.addEventListener("dragleave", listDragLeave, false);
+        item.addEventListener("drop", listDrop, false);
+    });
+}
+let listDragSrc= null;
+function listDragStart(e){
+    // console.log(e.type, e.target.innerHTML);
+    e.dataTransfer.setData("text/html", e.target.outerHTML);
+    e.dataTransfer.setData("id", e.target.id);
+    listDragSrc= this;
+}
+function listDragEnd(e){
+    // console.log(e.type, e.target.innerHTML);
+}
+function listDragEnter(e){
+    e.preventDefault();
+    if(listDragSrc.id!=this.id){
+        var listDropTarget=document.createElement("div");
+        var att=document.createAttribute("class");
+        att.nodeValue="list-drop-target";
+        listDropTarget.setAttributeNode(att);
+        e.target.appendChild(listDropTarget);
+    }
+    
+}
+function listDragOver(e){
+    e.preventDefault();
+}
+function listDragLeave(e){
+    let dropTarget=document.getElementsByClassName("list-drop-target")[0];
+    if(dropTarget) dropTarget.parentNode.removeChild(dropTarget);
+}
+function listDrop(e){
+    if (listDragSrc != this) {
+        var dropSrcId = e.dataTransfer.getData('id');
+        this.parentNode.insertBefore(listDragSrc,this);
+      }
+      this.classList.remove("list-drop-target");
+      let targetIndicators= document.getElementsByClassName("list-drop-target");
+    [...targetIndicators].forEach((item)=>{
+        item.parentNode.removeChild(item);
+    })
+      addListTitlesDragAndDrop();
 }

@@ -43,16 +43,28 @@ function addName(){
 let createListButton = document.getElementsByClassName("create-list-button")[0];
 createListButton.addEventListener("click",displayCreateList,false);
 function displayCreateList(){
-    document.getElementById("create-list-pop-up").style.display="block";
-       document.getElementById("create-list-bg").style.filter = "blur(2px)";
-       document.getElementsByClassName("aside")[0].style.filter = "grayscale(70%) blur(3px)";
-       document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(3px)";
+    let createListPop=document.getElementById("create-list-pop-up");
+    document.addEventListener("keyup", closeCreateListPop, false);
+    createListPop.style.display="block";
+    let closeButton= document.getElementsByClassName("close-button")[0];
+    closeButton.addEventListener("click", closeCreateListPop, false);
+    document.getElementById("create-list-bg").style.filter = "blur(2px)";
+    document.getElementsByClassName("aside")[0].style.filter = "grayscale(70%) blur(3px)";
+    document.getElementsByClassName("main")[0].style.filter = "grayscale(70%) blur(3px)";
 }
 let createListEnter = document.getElementsByClassName("create-list-enter-button")[0];
 createListEnter.addEventListener("click",createList,false);
 if(!createListEnter){
     var createListForm=document.getElementById("create-list-form");
     createListForm.addEventListener("submit",createList, false);
+}
+function closeCreateListPop(e){
+    if(e.keyCode === 27 || e.type=="click"){
+        document.getElementById("create-list-pop-up").style.display="none";
+        document.getElementsByClassName("aside")[0].style.filter = "grayscale(0%) blur(0px)";
+        document.getElementsByClassName("main")[0].style.filter = "grayscale(0%) blur(0px)";
+    }
+    
 }
 
 function createList(e){
@@ -63,8 +75,7 @@ function createList(e){
     const listItem={
         id: length++,
         title: listTitle,
-        items:[],
-        isDone: false
+        items:[]
     }
     if (localStorage.getItem("list") === null){
         let list=[listItem];
@@ -217,12 +228,18 @@ function addCheckEvent() {
 function checkBoxEvent(e){
     let listTitle=document.getElementsByClassName("main-header")[0].innerHTML;
     let listItem = list.filter((listItem)=> listItem.title==listTitle);
-    if(listItem[0].items[e.target.value].isDone){
-        listItem[0].items[e.target.value].isDone=false;
+    let note=listItem[0].items.filter((note)=> note.id==e.target.value);
+    console.log(note[0].isDone);
+    if(note[0].isDone){
+        console.log(list);
+        note[0].isDone=false;
+        console.log(list);
         e.target.removeAttribute("checked");
         e.target.parentNode.classList.remove("strikeout");
     }else{
-        listItem[0].items[e.target.value].isDone=true;
+        console.log(list);
+        note[0].isDone=true;
+        console.log(list);
         e.target.parentNode.className+=" strikeout";
         let att=document.createAttribute("checked");
         e.target.setAttributeNode(att);
